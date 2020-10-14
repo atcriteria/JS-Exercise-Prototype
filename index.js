@@ -39,8 +39,25 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
+}
 
+Person.prototype.eat = function(food){
+  if (this.stomach.length >= 10) return;
+  this.stomach.push(food);
+  return;
+}
+
+Person.prototype.poop = function(){
+  this.stomach = [];
+  return;
+}
+
+Person.prototype.toString = function(){
+  return `${this.name}, ${this.age}`;
 }
 
 /*
@@ -57,8 +74,14 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
+}
+Car.prototype.fill = function(gallons){
+  this.tank += gallons;
 }
 
 /*
@@ -68,18 +91,24 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
+}
 
+Baby.prototype = Object.create(Person.prototype);
+Baby.prototype.play = function(favoriteToy){
+  return `Playing with ${this.favoriteToy}`;
 }
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. This binds the attribute that follows with the parent object, whether that's the window object or the actual object it is called inside of.
+  2. Implicit Binding, or Implied Binding. As stated above, this is when `this.something` implies that it is to be bound to the preceeding object, and so it does. 
+  3. New Binding. This is used in conjunction with Constructor Functions but more specifically when a Constructor Function is called with the 'new' keyword. A CF will create an object that specifies its key-value pairs with the This keyword, such as `this.name = name`. This refers to the object created with the `new` keyword when it is called.
+  4. Explicit Binding. When we tell an object what to be bound with with a keyword such as '.call' or '.apply'.. 
 */
 
 
